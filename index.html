@@ -134,35 +134,39 @@
       overflow: hidden;
     }
 
-   .pill {
-  padding: 6px 12px;
+  .pill {
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   border: 1px solid var(--primary-blue-soft);
   color: var(--primary-blue);
   background: var(--primary-blue-soft);
 
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;              /* More spacing between dot and text */
   white-space: nowrap;
 }
 
 .pill-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;            /* Smaller dot */
+  height: 6px;           /* Smaller dot */
   border-radius: 50%;
   background: var(--primary-red);
   flex-shrink: 0;
+
+  position: relative;
+  top: 0.5px;            /* Slight downward alignment for perfect centering */
+
   animation: pulseDot 1.8s infinite ease-out;
 }
 
 @keyframes pulseDot {
   0%   { transform: scale(1); opacity: 1; }
-  70%  { transform: scale(1.5); opacity: 0; }
-  100% { transform: scale(1.5); opacity: 0; }
+  70%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
 }
 
 
