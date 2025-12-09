@@ -4,171 +4,112 @@
   <meta charset="UTF-8" />
   <title>StayBroker – Connecting PG Owners & Buyers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     :root {
       --primary-red: #f62b38;
       --primary-blue: #153a70;
       --primary-red-soft: #ffe6e8;
       --primary-blue-soft: #e2e8f5;
-      --text-main: #111111;
-      --text-muted: #666666;
+      --text-main: #111;
+      --text-muted: #666;
       --border-soft: #e7e7e7;
-      --bg-page: #ffffff;
-      --shadow-soft: 0 12px 25px rgba(0, 0, 0, 0.06);
+      --bg-page: #fff;
+      --shadow-soft: 0 12px 25px rgba(0,0,0,0.06);
       --radius-xl: 18px;
       --radius-lg: 14px;
       --radius-pill: 999px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
       background: var(--bg-page);
       color: var(--text-main);
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 18px 40px;
-    }
-
-    /* SIMPLE ANIMATIONS */
-
+    /* ANIMATION */
     @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .anim {
-      animation: fadeSlideUp 0.7s ease-out both;
-    }
-    .anim.delay-1 { animation-delay: 0.1s; }
-    .anim.delay-2 { animation-delay: 0.2s; }
-    .anim.delay-3 { animation-delay: 0.3s; }
+    .anim { animation: fadeSlideUp 0.7s ease-out both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
 
-    /* HEADER */
+    .page { max-width: 1100px; margin: 0 auto; padding: 18px; }
 
+    /* NAVBAR */
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
       padding: 10px 16px;
-      border-radius: var(--radius-xl);
       border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(14px);
       position: sticky;
       top: 10px;
-      z-index: 20;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(14px);
       margin-bottom: 10px;
-    }
-
-    .logo {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      z-index: 20;
     }
 
     .logo-title {
       font-size: 1.4rem;
       font-weight: 750;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       display: flex;
       gap: 2px;
     }
-    .logo-title .stay {
-      color: var(--primary-blue);
-    }
-    .logo-title .broker {
-      color: var(--primary-red);
-    }
+
+    .stay { color: var(--primary-blue); }
+    .broker { color: var(--primary-red); }
 
     .logo-subtitle {
       font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
       color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
     }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
 
+    /* ORIGINAL WORKING PILL — FIXED & CLEAN */
     .pill {
       padding: 6px 12px;
       border-radius: var(--radius-pill);
       font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       border: 1px solid var(--primary-blue-soft);
       color: var(--primary-blue);
       background: var(--primary-blue-soft);
       position: relative;
       overflow: hidden;
+      white-space: nowrap;
     }
 
-  .pill {
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  border: 1px solid var(--primary-blue-soft);
-  color: var(--primary-blue);
-  background: var(--primary-blue-soft);
+    .pill::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary-red);
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: pulseDot 1.8s ease-out infinite;
+    }
 
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;              /* More spacing between dot and text */
-  white-space: nowrap;
-}
-
-.pill-dot {
-  width: 6px;            /* Smaller dot */
-  height: 6px;           /* Smaller dot */
-  border-radius: 50%;
-  background: var(--primary-red);
-  flex-shrink: 0;
-
-  position: relative;
-  top: 0.5px;            /* Slight downward alignment for perfect centering */
-
-  animation: pulseDot 1.8s infinite ease-out;
-}
-
-@keyframes pulseDot {
-  0%   { transform: scale(1); opacity: 1; }
-  70%  { transform: scale(1.8); opacity: 0; }
-  100% { transform: scale(1.8); opacity: 0; }
-}
-
+    .pill span { margin-left: 18px; }
 
     @keyframes pulseDot {
       0% { transform: translateY(-50%) scale(1); opacity: 1; }
@@ -178,798 +119,154 @@
 
     .nav-cta {
       padding: 8px 16px;
-      border-radius: var(--radius-pill);
-      background: var(--primary-red);
-      color: #ffffff;
       font-size: 0.78rem;
       font-weight: 600;
+      text-transform: uppercase;
+      background: var(--primary-red);
+      color: #fff;
+      border-radius: var(--radius-pill);
       border: none;
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
-      box-shadow: 0 8px 16px rgba(246, 43, 56, 0.35);
+      box-shadow: 0 8px 16px rgba(246,43,56,0.35);
     }
 
-    .nav-cta:hover {
-      opacity: 0.94;
-      transform: translateY(-1px);
-      box-shadow: 0 11px 22px rgba(246, 43, 56, 0.4);
-    }
+    .nav-cta:hover { opacity: 0.94; }
 
     /* HERO */
-
     .hero {
       margin-top: 18px;
       display: grid;
       grid-template-columns: 3fr 2.2fr;
       gap: 26px;
-      align-items: stretch;
     }
 
-    @media (max-width: 840px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
+    @media(max-width:840px) {
+      .hero { grid-template-columns: 1fr; }
     }
 
     .hero-main {
-      padding: 26px 24px 24px;
-      border-radius: var(--radius-xl);
+      padding: 26px;
       border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .hero-tagline-pill {
-      align-self: flex-start;
-      padding: 6px 11px;
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--primary-blue);
-      background: linear-gradient(
-        90deg,
-        var(--primary-blue-soft),
-        var(--primary-red-soft)
-      );
+      background: #fff;
     }
 
     .hero-title {
       font-size: clamp(2.1rem, 4vw, 2.7rem);
       line-height: 1.1;
-      letter-spacing: -0.03em;
     }
 
-    .hero-title span.blue {
-      color: var(--primary-blue);
-    }
-    .hero-title span.red {
-      color: var(--primary-red);
-    }
+    .hero-title .blue { color: var(--primary-blue); }
+    .hero-title .red { color: var(--primary-red); }
 
     .hero-subtitle {
-      font-size: 0.95rem;
       color: var(--text-muted);
-      max-width: 480px;
+      margin-top: 8px;
+      margin-bottom: 12px;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-
-    .btn-primary,
-    .btn-ghost {
+    .btn-primary, .btn-ghost {
       padding: 10px 18px;
       border-radius: var(--radius-pill);
       font-size: 0.86rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
-      border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: transform 0.16s ease, box-shadow 0.16s ease,
-        border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
     }
 
     .btn-primary {
       background: var(--primary-red);
-      color: #ffffff;
-      border-color: var(--primary-red);
-      box-shadow: 0 9px 18px rgba(246, 43, 56, 0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(246, 43, 56, 0.45);
+      color: #fff;
+      border: none;
+      box-shadow: 0 9px 18px rgba(246,43,56,.35);
     }
 
     .btn-ghost {
-      background: #ffffff;
+      background: #fff;
       color: var(--primary-blue);
-      border-color: var(--primary-blue-soft);
+      border: 1px solid var(--primary-blue-soft);
     }
 
-    .btn-ghost:hover {
-      border-color: var(--primary-blue);
-      background: var(--primary-blue-soft);
-    }
-
-    .hero-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .hero-note span {
-      color: var(--primary-red);
-      font-weight: 600;
-    }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
     /* SIDE CARD */
-
-    .hero-side {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
     .card {
+      border: 1px solid var(--border-soft);
+      background: #fff;
+      padding: 18px;
       border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 18px 16px 16px;
-      background: #ffffff;
       box-shadow: var(--shadow-soft);
-      transition: transform 0.16s ease, box-shadow 0.16s ease,
-        border-color 0.16s ease;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary-blue-soft);
-      box-shadow: 0 16px 28px rgba(0, 0, 0, 0.08);
-    }
-
-    .card-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .card-heading {
-      font-size: 1rem;
-      font-weight: 650;
-      margin-bottom: 12px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      font-size: 0.85rem;
-    }
-
-    .card-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--primary-red);
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-
-    .label-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 9px;
-      border-radius: var(--radius-pill);
-      background: var(--primary-blue-soft);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--primary-blue);
-      margin-top: 4px;
-    }
-
-    /* HOW IT WORKS */
-
-    .section {
-      margin-top: 30px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .section-title {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--primary-blue);
-    }
-
-    .section-sub {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      max-width: 420px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    @media (max-width: 840px) {
-      .steps {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .step-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      padding: 14px 13px;
-      background: #ffffff;
-      font-size: 0.86rem;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      transition: transform 0.16s ease, box-shadow 0.16s ease,
-        border-color 0.16s ease;
-    }
-
-    .step-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary-blue-soft);
-      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
-    }
-
-    .step-index {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      border: 1px solid var(--primary-red-soft);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--primary-red);
-      margin-bottom: 2px;
-    }
-
-    .step-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .step-text {
-      color: var(--text-muted);
-    }
-
-    /* BUYERS & SELLERS SPLIT */
-
-    .split {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-
-    @media (max-width: 840px) {
-      .split {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .split-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      padding: 14px 13px 13px;
-      background: #ffffff;
-      font-size: 0.86rem;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: transform 0.16s ease, box-shadow 0.16s ease,
-        border-color 0.16s ease;
-    }
-
-    .split-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary-red-soft);
-      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
-    }
-
-    .split-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--primary-blue);
-    }
-
-    .split-title {
-      font-weight: 650;
-      font-size: 0.95rem;
-    }
-
-    .split-list {
-      margin-left: 16px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .split-cta {
-      margin-top: 6px;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--primary-red);
-    }
-
-    /* CONTACT */
-
-    .contact {
-      margin-top: 28px;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 16px 16px 18px;
-      background: #ffffff;
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: 3fr 2.4fr;
-      gap: 20px;
-      align-items: start;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      border: 1px solid transparent;
-      background: linear-gradient(
-          120deg,
-          rgba(21, 58, 112, 0.11),
-          rgba(246, 43, 56, 0.16)
-        )
-        border-box;
-      -webkit-mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    @media (max-width: 840px) {
-      .contact {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .contact-left-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--primary-blue);
-      margin-bottom: 6px;
-    }
-
-    .contact-heading {
-      font-size: 1.1rem;
-      font-weight: 650;
-      margin-bottom: 6px;
-    }
-
-    .contact-text {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      max-width: 430px;
-      margin-bottom: 10px;
-    }
-
-    .contact-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.78rem;
-    }
-
-    .contact-badge {
-      padding: 5px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px dashed var(--primary-blue-soft);
-      color: var(--primary-blue);
-      background: var(--primary-blue-soft);
-    }
-
-    form {
-      display: grid;
-      gap: 8px;
-      font-size: 0.84rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 8px 9px;
-      border-radius: 10px;
-      border: 1px solid var(--border-soft);
-      font: inherit;
-      outline: none;
-      transition: border-color 0.16s ease, box-shadow 0.16s ease;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary-blue);
-      box-shadow: 0 0 0 1px var(--primary-blue-soft);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-
-    .form-row-inline {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    @media (max-width: 540px) {
-      .form-row-inline {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .form-note {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    /* FOOTER */
-
-    .footer {
-      margin-top: 26px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      padding: 6px 4px 0;
-      border-top: 1px dashed var(--border-soft);
-    }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <!-- NAVBAR -->
-    <header class="nav anim">
-      <div class="logo">
-        <div class="logo-title">
-          <span class="stay">Stay</span><span class="broker">Broker</span>
-        </div>
-        <div class="logo-subtitle">Connecting PG Owners & Buyers</div>
+
+<div class="page">
+
+  <!-- NAV -->
+  <header class="nav anim">
+    <div class="logo">
+      <div class="logo-title">
+        <span class="stay">STAY</span><span class="broker">BROKER</span>
+      </div>
+      <div class="logo-subtitle">Connecting PG Owners & Buyers</div>
+    </div>
+
+    <div class="nav-right">
+      <div class="pill"><span>Currently serving · Bengaluru</span></div>
+      <button class="nav-cta" onclick="scrollToContact()">List or Buy a PG</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-main anim delay-1">
+      <div class="hero-tagline-pill">
+        PG buildings · buyers & owners only
       </div>
 
-      <div class="nav-right">
-       <div class="pill">
-  <div class="pill-dot"></div>
-  <span>Currently serving · Bengaluru</span>
+      <h1 class="hero-title">
+        Where <span class="blue">PG investors</span> and
+        <span class="red">PG owners</span> close deals faster.
+      </h1>
+
+      <p class="hero-subtitle">
+        StayBroker connects people who want to acquire PG buildings for business
+        with owners who are ready to sell – no tenants, only building-level deals.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToContact()">I want to buy a PG →</button>
+        <button class="btn-ghost" onclick="scrollToContact()">I want to sell my PG</button>
+      </div>
+    </div>
+
+    <aside class="card anim delay-2">
+      <h3>What StayBroker does</h3>
+      <ul>
+        <li>Curated PG building opportunities for investors.</li>
+        <li>One-on-one coordination between buyer and owner.</li>
+        <li>Simpler mediation instead of property portals.</li>
+      </ul>
+    </aside>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="margin-top:30px; color:#666; font-size:0.75rem;">
+    © <span id="year"></span> StayBroker. All rights reserved.
+  </footer>
+
 </div>
 
-        <button class="nav-cta" onclick="scrollToContact()">
-          List or Buy a PG
-        </button>
-      </div>
-    </header>
+<script>
+function scrollToContact() {
+  alert("Contact form not connected yet.");
+}
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
-    <!-- HERO -->
-    <main>
-      <section class="hero">
-        <div class="hero-main anim delay-1">
-          <div class="hero-tagline-pill">
-            PG buildings · buyers & owners only
-          </div>
-
-          <h1 class="hero-title">
-            Where <span class="blue">PG investors</span> and
-            <span class="red">PG owners</span> close deals faster.
-          </h1>
-
-          <p class="hero-subtitle">
-            StayBroker connects people who want to acquire PG buildings for
-            business with owners who are ready to sell – no tenants, only
-            building-level deals.
-          </p>
-
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="scrollToContact()">
-              I want to buy a PG →
-            </button>
-            <button class="btn-ghost" onclick="scrollToContact()">
-              I want to sell my PG
-            </button>
-          </div>
-
-          <p class="hero-note">
-            <span>Zero listing charge</span> for early users. Brokerage / fee
-            only on successful deal.
-          </p>
-        </div>
-
-        <!-- SIDE INFO CARD -->
-        <aside class="hero-side anim delay-2">
-          <div class="card">
-            <div class="card-title">Snapshot</div>
-            <div class="card-heading">What StayBroker does</div>
-
-            <div class="card-grid">
-              <div class="card-row">
-                <div class="dot"></div>
-                <div>
-                  Curated PG building opportunities for investors who want to
-                  run PG business.
-                </div>
-              </div>
-
-              <div class="card-row">
-                <div class="dot"></div>
-                <div>
-                  One-on-one coordination between buyer and owner until
-                  agreement.
-                </div>
-              </div>
-
-              <div class="card-row">
-                <div class="dot"></div>
-                <div>
-                  Simple, human mediation instead of confusing property portals.
-                </div>
-              </div>
-            </div>
-
-            <div class="label-pill">Focus: PG building transactions only</div>
-          </div>
-        </aside>
-      </section>
-
-      <!-- HOW IT WORKS -->
-      <section class="section anim delay-2">
-        <div class="section-header">
-          <h2 class="section-title">How StayBroker works</h2>
-          <p class="section-sub">
-            We sit in the middle – not as owners, not as tenants – but as clear,
-            transparent mediators.
-          </p>
-        </div>
-
-        <div class="steps">
-          <div class="step-card">
-            <div class="step-index">01</div>
-            <div class="step-title">Share your requirement</div>
-            <p class="step-text">
-              Buyers share budget, preferred area, bed capacity, existing
-              occupancy, and business plan. Sellers share building details and
-              expected price.
-            </p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-index">02</div>
-            <div class="step-title">Shortlisting & visit</div>
-            <p class="step-text">
-              We match both sides, arrange calls and site visits, and keep
-              communication clear so you don’t waste time on random leads.
-            </p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-index">03</div>
-            <div class="step-title">Deal support</div>
-            <p class="step-text">
-              Once both parties are interested, we support with next steps:
-              basic paperwork coordination and smooth handover of the PG
-              business or building.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- BUYERS & SELLERS -->
-      <section class="section anim delay-3">
-        <div class="section-header">
-          <h2 class="section-title">Who StayBroker is for</h2>
-        </div>
-
-        <div class="split">
-          <div class="split-card">
-            <div class="split-tag">For buyers</div>
-            <div class="split-title">Acquire a running PG or building</div>
-            <ul class="split-list">
-              <li>Investors who want to enter the PG business.</li>
-              <li>Existing PG operators looking to expand.</li>
-              <li>People searching for PG buildings with clear numbers.</li>
-            </ul>
-            <div class="split-cta">Fill buyer details in the form below ↓</div>
-          </div>
-
-          <div class="split-card">
-            <div class="split-tag">For owners</div>
-            <div class="split-title">Sell your PG property with less noise</div>
-            <ul class="split-list">
-              <li>PG building owners planning to exit or upgrade.</li>
-              <li>Owners who prefer serious, filtered buyers.</li>
-              <li>Direct owner-to-buyer deals, with us mediating.</li>
-            </ul>
-            <div class="split-cta">
-              Share your PG details in the form below ↓
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT / LEAD FORM -->
-      <section class="contact anim delay-3" id="contact">
-        <div>
-          <div class="contact-left-title">Get in touch</div>
-          <div class="contact-heading">
-            Tell us if you want to
-            <span style="color: var(--primary-blue)">buy</span> or
-            <span style="color: var(--primary-red)">sell</span> a PG.
-          </div>
-
-          <p class="contact-text">
-            Send your details and we’ll contact you on WhatsApp or call with
-            matching options. No spam, no random marketing messages.
-          </p>
-
-          <div class="contact-badges">
-            <div class="contact-badge">
-              Early stage · limited PG listings
-            </div>
-            <div class="contact-badge">
-              Only PG buildings / full-floor deals
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <!-- NOTE: Replace action / phone as per your setup -->
-          <form>
-            <div class="form-row-inline">
-              <div>
-                <label for="name">Name</label>
-                <input id="name" type="text" placeholder="Your full name" />
-              </div>
-              <div>
-                <label for="phone">WhatsApp / Phone</label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder="+91 XXXXX XXXXX"
-                  inputmode="tel"
-                />
-              </div>
-            </div>
-
-            <div class="form-row-inline">
-              <div>
-                <label for="role">You are</label>
-                <select id="role">
-                  <option value="">Select</option>
-                  <option value="buyer">Buyer – want to acquire a PG</option>
-                  <option value="seller">Owner – want to sell my PG</option>
-                  <option value="both">Both</option>
-                </select>
-              </div>
-              <div>
-                <label for="budget">Budget / Price range</label>
-                <input
-                  id="budget"
-                  type="text"
-                  placeholder="e.g. ₹1.5–3 Cr"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label for="location">Preferred area</label>
-              <input
-                id="location"
-                type="text"
-                placeholder="e.g. Koramangala, BTM, Kundalahalli..."
-              />
-            </div>
-
-            <div>
-              <label for="details">PG / building details</label>
-              <textarea
-                id="details"
-                placeholder="Beds, current occupancy, building type, any special requirement…"
-              ></textarea>
-            </div>
-
-            <button type="button" class="btn-primary" onclick="fakeSubmit()">
-              Send details to StayBroker
-            </button>
-
-            <p class="form-note">
-              This is a static demo form. Connect it later to Google Forms,
-              WhatsApp API, or your backend.
-            </p>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div>© <span id="year"></span> StayBroker. All rights reserved.</div>
-      <div>
-        Minimal red & blue landing page. Update contact and links as your
-        business grows.
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    function scrollToContact() {
-      const el = document.getElementById("contact");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-
-    function fakeSubmit() {
-      alert(
-        "Form clicked.\n\nRight now this is just a static page.\nConnect it to Google Forms or your backend to receive leads."
-      );
-    }
-
-    document.getElementById("year").textContent =
-      new Date().getFullYear().toString();
-  </script>
 </body>
 </html>
