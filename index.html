@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="favicon.png">
-
   <title>StayBroker – Connecting PG Owners & Buyers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -595,22 +592,60 @@
       background: var(--primary-blue-soft);
     }
 
-    /* Google Form embed */
-    .gform-wrapper {
-      width: 100%;
+    form {
+      display: grid;
+      gap: 8px;
+      font-size: 0.84rem;
+      position: relative;
+      z-index: 1;
     }
 
-    .gform-iframe {
-      width: 100%;
-      max-width: 100%;
-      height: 750px; /* adjust if needed */
-      border: 0;
+    label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
     }
 
-    @media (max-width: 600px) {
-      .gform-iframe {
-        height: 900px;
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 1px var(--primary-blue-soft);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-row-inline {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 540px) {
+      .form-row-inline {
+        grid-template-columns: 1fr;
       }
+    }
+
+    .form-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
 
     /* FOOTER */
@@ -792,7 +827,7 @@
         </div>
       </section>
 
-      <!-- CONTACT / LEAD FORM (GOOGLE FORM EMBED) -->
+      <!-- CONTACT / LEAD FORM -->
       <section class="contact anim delay-3" id="contact">
         <div>
           <div class="contact-left-title">Get in touch</div>
@@ -818,17 +853,80 @@
         </div>
 
         <div>
-          <div class="gform-wrapper">
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSf6TN0Vqe0Pimd1bDJEyHlk-Tvui72CH0UfD_gt0-mUUo0SPA/viewform?embedded=true"
-              class="gform-iframe"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
-            >
-              Loading…
-            </iframe>
-          </div>
+          <!-- REAL FORM: sends to your email via FormSubmit -->
+          <form action="https://formsubmit.co/staybroker.help@gmail.com" method="POST">
+            <!-- FormSubmit options -->
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_subject" value="New StayBroker PG Lead" />
+            <input type="hidden" name="_template" value="table" />
+
+            <div class="form-row-inline">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="Name" type="text" placeholder="Your full name" required />
+              </div>
+              <div>
+                <label for="phone">WhatsApp / Phone</label>
+                <input
+                  id="phone"
+                  name="Phone"
+                  type="tel"
+                  placeholder="+91 XXXXX XXXXX"
+                  inputmode="tel"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row-inline">
+              <div>
+                <label for="role">You are</label>
+                <select id="role" name="Role" required>
+                  <option value="">Select</option>
+                  <option value="Buyer – want to acquire a PG">Buyer – want to acquire a PG</option>
+                  <option value="Owner – want to sell my PG">Owner – want to sell my PG</option>
+                  <option value="Both">Both</option>
+                </select>
+              </div>
+              <div>
+                <label for="budget">Budget / Price range</label>
+                <input
+                  id="budget"
+                  name="Budget"
+                  type="text"
+                  placeholder="e.g. ₹1.5–3 Cr"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="location">Preferred area</label>
+              <input
+                id="location"
+                name="Preferred area"
+                type="text"
+                placeholder="e.g. Koramangala, BTM, Kundalahalli..."
+              />
+            </div>
+
+            <div>
+              <label for="details">PG / building details</label>
+              <textarea
+                id="details"
+                name="PG / Building details"
+                placeholder="Beds, current occupancy, building type, any special requirement…"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              Send details to StayBroker
+            </button>
+
+            <p class="form-note">
+              Your details will be sent to StayBroker. We’ll contact you on WhatsApp or call
+              with matching PG options.
+            </p>
+          </form>
         </div>
       </section>
     </main>
