@@ -41,6 +41,68 @@
 
 
   <style>
+    .footer-strong {
+  margin-top: 40px;
+  padding: 30px 18px 16px;
+  border-top: 1px solid var(--border-soft);
+  background: #fff;
+  font-size: 0.82rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 18px;
+}
+
+@media (max-width: 840px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-brand {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.footer-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--primary-blue);
+  margin-bottom: 6px;
+}
+
+.footer-text {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+}
+
+.footer-links a:hover {
+  color: var(--primary-red);
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
     :root {
       --primary-red: #f62b38;
       --primary-blue: #153a70;
